@@ -63,5 +63,10 @@ The project is deployed on **Azure** under the resource group `ClassConnect`. Th
 3. **MySQL Database Server**: Manages session data and stores attendance records (named as **classconnect-database** on Azure).
 
 Following is the overview of **ClassConnect** resource group:
+1. **student**: WebSocket server hosted using Azure App Service.
+2. **flask-servers**: Validation, Report Generation, and Student Data insertion servers hosted using Azure App Service 
+3. **classconnect-database**: Azure Database for MySQL flexible server
+4. **ClassConnect-VNet**: Virtual network that isolates and secures the student, flask-servers, and classconnect-database.
 
+   
 ![Architecture Image](/images/azure_view.png)
