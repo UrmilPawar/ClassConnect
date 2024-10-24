@@ -58,8 +58,8 @@ The system architecture is divided into three major phases:
  ## Deployment
 The project is deployed on **Azure** under the resource group `ClassConnect`. The following are the key components of the resource group:
 
-1. **WebSocket Server**: Handles communication between teachers and students (named as **student** on Azure).
-2. **Flask Servers**: Validation server (marks student present in the database), Report Generation server (generates report for teachers), and Student Data insertion server (inserts new student data or updates existing student data in the database), (named as **flask-servers** on Azure).
+1. **WebSocket Server (App Service)**: Handles communication between teachers and students (named as **student** on Azure).
+2. **Flask Servers (App Service)**: Validation server (marks student present in the database), Report Generation server (generates report for teachers), and Student Data insertion server (inserts new student data or updates existing student data in the database), (named as **flask-servers** on Azure).
 3. **MySQL Database Server (Azure Database for MySQL flexible server)**: Manages lecture data and stores attendance records (named as **classconnect-database** on Azure).
 4. **Virtual Network**: Isolates and secures the student server, flask-servers, and classconnect-database (named as **ClassConnect-VNet** on Azure)
 
