@@ -63,6 +63,6 @@ The project is deployed on **Azure** under the resource group `ClassConnect`. Th
 3. **MySQL Database Server (Azure Database for MySQL flexible server)**: Manages lecture data and stores attendance records (named as **classconnect-database** on Azure).
 4. **Virtual Network**: Isolates and secures the student server, flask-servers, and classconnect-database (named as **ClassConnect-VNet** on Azure)
 
-Following is the overview of **ClassConnect** resource group:
+Following is the overview :
    
 ![Architecture Image](/images/azure-portal.png)
