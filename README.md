@@ -66,4 +66,4 @@ The project is deployed on **Azure** under the resource group `ClassConnect`. Th
 
 Following is the overview of **ClassConnect** resource group:
    
-![Architecture Image](/images/azure_view.png)
+![Architecture Image](/images/azure-portal.png)
