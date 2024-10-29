@@ -66,3 +66,8 @@ The project is deployed on **Azure** under the resource group `ClassConnect`. Th
 Following is the overview :
    
 ![Architecture Image](/images/azure-portal.png)
+
+
+## Documentation
+The following link provides a detailed explanation of how ClassConnect works:
+[Documnetation](https://docs.google.com/document/d/1BGWqbTcxqxrzSTfwpRdzLHxN-rtOvTsP/edit?usp=sharing&ouid=100036865083389644506&rtpof=true&sd=true)
