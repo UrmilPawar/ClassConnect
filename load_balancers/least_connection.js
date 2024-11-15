@@ -4,7 +4,7 @@ const redis = require('redis');
 
 const servers = [
   { url: 'wss://student-gpfke5b2hha4c0g3.centralindia-01.azurewebsites.net', connections: 0 },
-  { url: 'ws://localhost:8081', connections: 0 }
+  { url: 'ws://websocket-2-dza4fnfac8hhfpey.centralindia-01.azurewebsites.net', connections: 0 }
 ];
 
 //-----------------------------------------Redis Functionality------------------------------------

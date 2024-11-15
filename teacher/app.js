@@ -13,7 +13,7 @@
 
 //function to get the websocket serverURL as 'fetch' is asynchronous : so a connection attempt with websocket is being made before the fetch reslts
 async function fetchSocketURL() {
-    const response = await fetch('http://localhost:8085', {
+    const response = await fetch('https://least-connections-gthjh7ddgtc0eqcs.centralindia-01.azurewebsites.net', {
         method: 'GET',
         mode: 'cors', // Ensure CORS is enabled
         headers: {
@@ -149,7 +149,7 @@ function fetchteacherData() {
 
     //'https://flask-servers-gqazghgmg7hnbsgv.centralindia-01.azurewebsites.net/report_data'
     //'http://127.0.0.1:3001/report_data'
-    fetch('http://127.0.0.1:5000/round_robin', {
+    fetch('https://round-robin-d0b9f9dhbzcdbrgn.centralindia-01.azurewebsites.net/round_robin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

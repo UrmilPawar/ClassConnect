@@ -60,7 +60,7 @@ function sendStudentDataToFlask(studentData,DistanceCheck,BiometricCheck) {
         // Sending data to Flask server
         //'https://flask-servers-gqazghgmg7hnbsgv.centralindia-01.azurewebsites.net/attendance_data'
         //'http://127.0.0.1:3001/attendance_data'
-        fetch('http://127.0.0.1:5000/round_robin', {
+        fetch('https://round-robin-d0b9f9dhbzcdbrgn.centralindia-01.azurewebsites.net/round_robin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ function sendStudentDataToFlask(studentData,DistanceCheck,BiometricCheck) {
 //We are using async/await here forcefully because we require response frome fetch before returning it
 async function fetchSocketURL() {
     try {
-        const response = await fetch('http://localhost:8085', {
+        const response = await fetch('https://least-connections-gthjh7ddgtc0eqcs.centralindia-01.azurewebsites.net', {
             method: 'GET',
             mode: 'cors', // Ensure CORS is enabled
             headers: {
