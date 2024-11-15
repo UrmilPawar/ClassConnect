@@ -27,7 +27,7 @@
    - When the teacher clicks the "Stop" button, a report of all students marked present during the session is generated from database and provided to the teacher.
 
 ## System Architecture
-The system architecture can be divided into three major phases: 
+The system architecture is divided into three major phases: 
 1. **Client Connection and Session Initialization**:
    ![Phase 1](/images/phase1.jpg)
 2. **Attendance Verification and Marking**:
@@ -35,25 +35,39 @@ The system architecture can be divided into three major phases:
 3. **Session Closure and Report Generation**:
    ![Phase 3](/images/phase3.jpg)
 
-**Following is the high-level representation of the system**
-![Project Architecture](/images/architecture.jpg)
+## Following is the high-level representation of the system
+   ![Project Architecture](/images/architecture.jpg)
 
  ## System Analysis
- 1. **Data Flow Diagram**
+ 1. ### **Data Flow Diagram**
     ![Project Architecture](/images/DFD.jpg)
- 3. **Functional Model**: Use Case Diagram 
-    ![Project Architecture](/images/Use Case Diagram.png)
- 5. **Structural Model**: Component Diagram
-    ![Project Architecture](/images/Component Diagram.png)
- 7. **Behavioural Model**: Sequence Diagram
-    ![Project Architecture](/images/architecture.jpg)
 
-The project is deployed on **Azure** under the resource group `ClassConnect`. The following are the key components of the architecture:
+    
+ 2. ### **Functional Model**: Use Case Diagram 
+    ![Project Architecture](/images/Use_Case_Diagram.png)
 
-1. **WebSocket Server**: Handles communication between teachers and students (named as **student** on Azure) .
-2. **Flask Servers**: Hosts the Flask applications (named as **flask-servers** on Azure).
-3. **MySQL Database Server**: Manages session data and stores attendance records (named as **classconnect-database** on Azure).
+    
+ 3. ### **Structural Model**: Component Diagram
+    ![Project Architecture](/images/Component_Diagram.png)
 
-Following is the overview of **ClassConnect** resource group:
+    
+ 4. ### **Behavioural Model**: Sequence Diagram
+    ![Project Architecture](/images/Sequence_Diagram.png)
 
-![Architecture Image](/images/azure_view.png)
+
+ ## Deployment
+The project is deployed on **Azure** under the resource group `ClassConnect`. The following are the key components of the resource group:
+
+1. **WebSocket Server (App Service)**: Handles communication between teachers and students (named as **student** on Azure).
+2. **Flask Servers (App Service)**: Validation server (marks student present in the database), Report Generation server (generates report for teachers), and Student Data insertion server (inserts new student data or updates existing student data in the database), (named as **flask-servers** on Azure).
+3. **MySQL Database Server (Azure Database for MySQL flexible server)**: Manages lecture data and stores attendance records (named as **classconnect-database** on Azure).
+4. **Virtual Network**: Isolates and secures the student server, flask-servers, and classconnect-database (named as **ClassConnect-VNet** on Azure)
+
+Following is the overview :
+   
+![Architecture Image](/images/azure-portal.png)
+
+
+## Documentation
+The following link provides a detailed explanation of how ClassConnect works:
+[Documnetation](https://docs.google.com/document/d/1BGWqbTcxqxrzSTfwpRdzLHxN-rtOvTsP/edit?usp=sharing&ouid=100036865083389644506&rtpof=true&sd=true)
