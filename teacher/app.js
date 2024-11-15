@@ -1,4 +1,3 @@
-
 //------------------------------------------------This file registers the Service Worker.----------------------------------
 // if ('serviceWorker' in navigator) {                                                     
 //     window.addEventListener('load', () => {
@@ -12,45 +11,107 @@
 //     });
 // }
 
+//function to get the websocket serverURL as 'fetch' is asynchronous : so a connection attempt with websocket is being made before the fetch reslts
+async function fetchSocketURL() {
+    const response = await fetch('http://localhost:8085', {
+        method: 'GET',
+        mode: 'cors', // Ensure CORS is enabled
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    const data = await response.json();  // Wait for the response to be parsed
+    alert(`fetched : ${data.server}`)
+    return data.server;  // Return the server URL
+}
+
 
 //------------------------------------------- For sending the signal to the websocket----------------------------------------------
 let socket=null;
+let teacherData = {};
+let dataToSend={}
 
-document.getElementById('teacherForm').addEventListener('submit', function(event) {
+document.getElementById('teacherForm').addEventListener('submit', async function(event) {
     event.preventDefault(); 
 
-    const studentData = {
+    teacherData = {
         user: document.getElementById('user').value,
         name: document.getElementById('name').value,
         branch: document.getElementById('branch').value,
         division: document.getElementById('division').value,
         year: document.getElementById('year').value,
-        t_id: document.getElementById('t_id').value
+        t_id: document.getElementById('t_id').value,
+        lec_name: document.getElementById('lec_name').value,
+        pass_year: document.getElementById('pass_year').value    //extracted as string
     };
 
-    const dataToSend = {
-        user: studentData.user,
-        t_id: studentData.t_id.toUpperCase()
+    dataToSend = {
+        user: teacherData.user,
+        t_id: teacherData.t_id.toUpperCase(),
+        branch: teacherData.branch,
+        division: teacherData.division,
+        lec_name: teacherData.lec_name.toUpperCase(),
+        location: {},
+        action: null
     };
 
+    //--------------funcion to fetch location (Cant call as a function call because it is asynchronous)---------
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                // Set the location in dataToSend
+                dataToSend.location = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+                alert('Location fetched successfully: Latitude: ' + dataToSend.location.latitude + ', Longitude: ' + dataToSend.location.longitude);
+            },
+            function (error) {
+                // Handle errors
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        alert('User denied the request for Geolocation.');
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        alert('Location information is unavailable.');
+                        break;
+                    case error.TIMEOUT:
+                        alert('The request to get user location timed out.');
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        alert('An unknown error occurred.');
+                        break;
+                }
+            }
+        );
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
+
+    socket_serverURL =await fetchSocketURL();
     if (!socket || socket.readyState === WebSocket.CLOSED) {   //to avoid creating multiple connection if user clicks on submit multiple times
-        socket = new WebSocket('wss://student-gpfke5b2hha4c0g3.centralindia-01.azurewebsites.net');
+        // socket = new WebSocket('wss://student-gpfke5b2hha4c0g3.centralindia-01.azurewebsites.net');
+        // socket = new WebSocket('ws://localhost:8081');
+        socket = new WebSocket(socket_serverURL);
 
         socket.onopen = function(event) {
             alert('WebSocket connection Established');
+            dataToSend.action = 'connect';
             socket.send(JSON.stringify(dataToSend));
-            alert('Data sent');
+            alert('Data sent to the WebSocket Server');
         };
         
         socket.onmessage = function(event) {
             const serverMessage = JSON.parse(event.data);
             if (serverMessage.status === 'success') {
-                alert('Data Received');
+                alert('Data Received by the server');
             }
         };
         
         socket.onclose = function(event) {
-            alert('WebSocket connection closed');                  //shows alert when connection is closed
+            alert('WebSocket connection closed',event);                  //shows alert when connection is closed
+            console.log('WebSocket connection closed',event); 
         };
         
         socket.onerror = function(error) {
@@ -59,10 +120,114 @@ document.getElementById('teacherForm').addEventListener('submit', function(event
     }
 });
 
+//-------------------------------------------------Necessary Functions-------------------------------------------
+
+//Function to start the attendnace
+document.getElementById('start').addEventListener('click', function() {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        dataToSend.action = 'start';
+        socket.send(JSON.stringify(dataToSend));
+        alert('Start message sent to the WebSocket Server');
+    } else {
+        alert('WebSocket is not connected');
+    }
+});
+
+// Function to fetch student data from the Flask server
+function fetchteacherData() {
+    //Getting the course duration
+    passYear=teacherData.pass_year;
+    admissionYear = Number(passYear) - 4;
+    passYearLastTwoDigits = passYear.slice(-2);
+    admissionYearLastTwoDigits = String(admissionYear).slice(-2);
+
+
+    const lectureId = passYearLastTwoDigits+ '-' + teacherData.branch + teacherData.division + teacherData.t_id + teacherData.lec_name + '-' +admissionYearLastTwoDigits;
+    const lectureData = {
+        lecture_id: lectureId
+    };
+
+    //'https://flask-servers-gqazghgmg7hnbsgv.centralindia-01.azurewebsites.net/report_data'
+    //'http://127.0.0.1:3001/report_data'
+    fetch('http://127.0.0.1:5000/round_robin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            type:'report',
+            data : lectureData
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data received:', data); // Log the data received
+        student_data=data.dataToReturn;
+        displaystudentData(student_data);
+        alert('Student data fetched successfully');
+    })
+    .catch((error) => {
+        console.error('Error fetching student data:', error);
+        alert('Error fetching student data');
+    });
+}
+
+
+// Function to display student data in a table format
+function displaystudentData(studentData) {
+    const students = studentData.students; // Accessing the 'students' array
+    const container = document.getElementById('TableBody');
+
+    // Clearing any previous data
+    container.innerHTML = '';
+
+    // Create a table
+    const table = document.createElement('table');
+    table.classList.add('min-w-full', 'bg-white', 'shadow-md', 'rounded-lg', 'overflow-hidden', 'border', 'border-gray-300');
+
+    // Create table header
+    const headerRow = document.createElement('tr');
+    headerRow.classList.add('bg-gray-200', 'text-gray-600', 'text-left', 'uppercase', 'text-xs', 'font-semibold', 'border-b', 'border-gray-300');
+    const headers = ['Name', 'Roll Number'];
+    headers.forEach(headerText => {
+        const header = document.createElement('th');
+        header.classList.add('px-6', 'py-3');
+        header.textContent = headerText;
+        headerRow.appendChild(header);
+    });
+    table.appendChild(headerRow);
+
+    // Check if students array is empty
+    if (students.length === 0) {
+        alert('No Students in the class');
+    } else {
+        // Create rows for each student object in the array
+        students.forEach(student => {
+            const dataRow = document.createElement('tr');
+            dataRow.classList.add('border-b', 'border-gray-200', 'hover:bg-gray-100'); // Add hover effect and border
+            const values = [student.name, student.roll_no]; // Get name and roll number
+            values.forEach(value => {
+                const cell = document.createElement('td');
+                cell.classList.add('px-6', 'py-4', 'text-gray-700');
+                cell.textContent = value;
+                dataRow.appendChild(cell);
+            });
+            table.appendChild(dataRow);
+        });
+    }
+
+    // Appending the table to the container
+    container.appendChild(table);
+}
+
+
+
+
 //-------------------------------------------------Disconnecting with websocket----------------------------------------------------------------------
 function disconnectWebSocket() {
     if (socket && socket.readyState === WebSocket.OPEN) {
         socket.close();
+        fetchteacherData();
     } else {
         alert('WebSocket is not open or already closed');
     }

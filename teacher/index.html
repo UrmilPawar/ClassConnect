@@ -3,64 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World PWA</title>
+    <title>Teacher App</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="/teacher/manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Teacher App</h1>
-    <form id="teacherForm" >
-        <label for="user">User Type:</label>
-        <select id="user" required>
-            <option value="" disabled selected>Selet User Type</option>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-        </select>
+<body class="bg-gray-100 min-h-screen flex justify-center items-center">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <h1 class="text-3xl font-semibold text-center text-gray-700 mb-6">Teacher App</h1>
+        <form id="teacherForm" class="space-y-4">
+            <div>
+                <label for="user" class="block text-sm font-medium text-gray-600">User Type:</label>
+                <select id="user" class="w-full h-10 px-3 py-2 bg-[#8280FF] text-white rounded-lg focus:outline-none" required>
+                    <option value="student" >Student</option>
+                    <option value="teacher" selected>Teacher</option>
+                </select>
+            </div>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" required>
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-600">Name:</label>
+                <input type="text" id="name" class="w-full h-10 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" value="Jason Dwane" required>
+            </div>
 
-        <label for="t_id">Initials:</label>
-        <input type="text" id="t_id" required>
+            <div>
+                <label for="t_id" class="block text-sm font-medium text-gray-600">Initials:</label>
+                <input type="text" id="t_id" class="w-full h-10 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none" value="JD" required>
+            </div>
 
-        <label for="branch">Department:</label>
-        <select id="branch" required>
-            <option value="" disabled selected>Select Branch</option>
-            <option value="COMP">COMP</option>
-            <option value="IT">IT</option>
-            <option value="E&CS">E&CS</option>
-            <option value="E&TC">E&TC</option>
-            <option value="AIML">AIML</option>
-            <option value="AIDS">AIDS</option>
-            <option value="IOT">IOT</option>
-            <option value="CSE">CSE</option>
-            <option value="MECH">MECH</option>
-            <option value="MME">MME</option>
-            <option value="MME">MME</option>
-            <option value="CIVIL">CIVIL</option>
-        </select>
+            <div>
+                <label for="branch" class="block text-sm font-medium text-gray-600">Department:</label>
+                <select id="branch" class="w-full h-10 px-3 py-2 bg-[#8280FF] text-white rounded-lg focus:outline-none" required>
+                    <option value="COMP" selected>COMP</option>
+                    <option value="IT">IT</option>
+                    <option value="E&CS">E&CS</option>
+                    <option value="E&TC">E&TC</option>
+                    <option value="AIML">AIML</option>
+                    <option value="AIDS">AIDS</option>
+                    <option value="IOT">IOT</option>
+                    <option value="CSE">CSE</option>
+                    <option value="MECH">MECH</option>
+                    <option value="MME">MME</option>
+                    <option value="CIVIL">CIVIL</option>
+                </select>
+            </div>
 
-        <label for="division">Division:</label>
-        <select id="division" required>
-            <option value="" disabled selected>Select Division</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="N">NA</option>
-        </select>
+            <div>
+                <label for="division" class="block text-sm font-medium text-gray-600">Division:</label>
+                <select id="division" class="w-full h-10 px-3 py-2 bg-[#8280FF] text-white rounded-lg focus:outline-none" required>
+                    <option value="A" selected>A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="N">NA</option>
+                </select>
+            </div>
 
-        <label for="year">Year:</label>
-        <select id="year" required>
-            <option value="" disabled selected>Select year</option>
-            <option value="FE">First Year</option>
-            <option value="SE">Second Year</option>
-            <option value="TE">Third Year</option>
-            <option value="BE">Fourth Year</option>
-        </select>
+            <div>
+                <label for="year" class="block text-sm font-medium text-gray-600">Year:</label>
+                <select id="year" class="w-full h-10 px-3 py-2 bg-[#8280FF] text-white rounded-lg focus:outline-none" required>
+                    <option value="FE" selected>First Year</option>
+                    <option value="SE">Second Year</option>
+                    <option value="TE">Third Year</option>
+                    <option value="BE">Fourth Year</option>
+                </select>
+            </div>
 
-        <button type="submit">Submit</button>
-    </form>
-    <button id="close">close</button>
+            <div>
+                <label for="lec_name" class="block text-sm font-medium text-gray-600">Lecture Name:</label>
+                <select id="lec_name" class="w-full h-10 px-3 py-2 bg-[#8280FF] text-white rounded-lg focus:outline-none" required>
+                    <option value="Maths" selected>Maths</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="History">History</option>
+                </select>
+            </div>
+
+            <label for="pass_year">Passing Year:</label>
+            <input type="number" id="pass_year" name="numberInput" value="2024" required>
+
+            <button type="submit" id="connect" class="w-full h-12 bg-[#5856A1] text-white font-semibold rounded-lg shadow-lg hover:bg-[#6f69bf]">
+                Connect
+            </button>
+        </form>
+
+        <button id="start" class="w-full h-12 bg-[#5856A1] text-white font-semibold rounded-lg shadow-lg hover:bg-[#6f69bf]">
+            Start
+        </button>
+
+        <button id="close" class="mt-6 w-full h-12 bg-gray-500 text-white font-semibold rounded-lg shadow-lg hover:bg-gray-600">
+            Close
+        </button>
+    </div>
+
+    <div id="TableBody" class="mt-4"></div>
 
     <script src="/teacher/app.js"></script>
 </body>

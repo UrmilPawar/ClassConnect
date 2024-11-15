@@ -47,13 +47,13 @@ def validation_server():
         
         conn = pool.get_connection()
         cursor = conn.cursor()
-        # Check if lecture exists; if not, insert into lecture_details
+        # If lecture exists just update name; if not, insert into lecture_details
         insert_lecture_query = """INSERT INTO lecture_details (l_id, lecture_name, branch, division, teacher_initials, date) VALUES (%s, %s, %s, %s, %s, CURDATE()) 
         ON DUPLICATE KEY UPDATE lecture_name = VALUES(lecture_name);"""
         cursor.execute(insert_lecture_query, (l_id, lecture_name, branch, division, teacher_initials))
 
-        # Mapping student and lecture
-        mapping_query = """INSERT INTO attendance (UID, l_id) VALUES (%s, %s);"""
+        # Mapping student and lecture (if student submits multiple times-instaed of error for dulicate key the apprpriate UID or LID will change)
+        mapping_query = """INSERT INTO attendance (UID, l_id) VALUES (%s, %s) ON DUPLICATE KEY UPDATE UID = VALUES(UID), l_id = VALUES(l_id);;"""
         cursor.execute(mapping_query, (UID, l_id))
 
         # Commitng the transaction
