@@ -99,7 +99,7 @@ def update_database():
     return ans
 
 
-#Route for retriving the data for report generation
+# Route for retriving the data for report generation
 @app.route('/report_data', methods=['POST'])
 def get_students_by_lecture():
     ans=''
