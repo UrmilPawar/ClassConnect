@@ -61,7 +61,11 @@ The project is deployed on **Azure** under the resource group `ClassConnect`. Th
 1. **WebSocket Server (App Service)**: Handles communication between teachers and students (named as **student** on Azure).
 2. **Flask Servers (App Service)**: Validation server (marks student present in the database), Report Generation server (generates report for teachers), and Student Data insertion server (inserts new student data or updates existing student data in the database), (named as **flask-servers** on Azure).
 3. **MySQL Database Server (Azure Database for MySQL flexible server)**: Manages lecture data and stores attendance records (named as **classconnect-database** on Azure).
-4. **Virtual Network**: Isolates and secures the student server, flask-servers, and classconnect-database (named as **ClassConnect-VNet** on Azure)
+4. **Redis Server (Virtual Machine)**: Enables communication between WebSockets and Least connection load balancer through **classconnect-channel**. The server is hosted on a Virtual Machine using **Docker** (named as **redis-server** on Azure).
+5. **Virtual Network**: Holds the network interface for the redis-server VM (named as **ClassConnect-VNet** on Azure).
+6. **Least Connections Load Balancer (App Service)**: Provides students and teachers with the URL of the WebSocket server with least number of active connections (named as **least-connections** on Azure).
+7. **Round Robin Load Balancer (App Service)**: Routes the student and teacher requests for interacting with database using round-robin algorithm (named as **round-robin** on Azure).
+8. **Websocket server-2 (App Service)**: An additional WebSocket server to handle communication between teachers and students (named as **websocket-2** on Azure).
 
 Following is the overview :
    
