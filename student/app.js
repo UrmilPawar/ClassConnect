@@ -57,6 +57,7 @@ function sendStudentDataToFlask(studentData,DistanceCheck,BiometricCheck) {
             teacher_initials: studentData.t_id.toUpperCase()
         };     
 
+        
         // Sending data to Flask server
         //'https://flask-servers-gqazghgmg7hnbsgv.centralindia-01.azurewebsites.net/attendance_data'
         //'http://127.0.0.1:8080/round_robin'
