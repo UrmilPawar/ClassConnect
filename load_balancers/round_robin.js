@@ -4,7 +4,7 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express(); // Creating the instance of the Express application
-const PORT = 5000;
+const PORT = 8080;
 
 app.use(cors());
 

@@ -87,7 +87,7 @@ const server = http.createServer((req, res) => {
 });
 
 // Starting the http server
-server.listen(5001, () => {
+server.listen(8080, () => {
   console.log('Load balancer running on http://localhost:8085');
 });
 

@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const redis = require('redis');
 
 // ----------------------------------WebSocket server setup---------------------
-const PORT = process.env.PORT || 8081;
+const PORT = 8080;
 const wss = new WebSocket.Server({ port: PORT }, () => {
     console.log(`WebSocket server started on ws://localhost:${PORT}`);
 });
