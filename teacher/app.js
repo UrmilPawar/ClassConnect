@@ -142,7 +142,8 @@ function fetchteacherData() {
     admissionYearLastTwoDigits = String(admissionYear).slice(-2);
 
 
-    const lectureId = passYearLastTwoDigits+ '-' + teacherData.branch + teacherData.division + teacherData.t_id + teacherData.lec_name + '-' +admissionYearLastTwoDigits;
+    const lectureId = admissionYearLastTwoDigits+ '-' + teacherData.branch + teacherData.division + teacherData.t_id + teacherData.lec_name + '-' +passYearLastTwoDigits;
+    // console.log(lectureId)
     const lectureData = {
         lecture_id: lectureId
     };

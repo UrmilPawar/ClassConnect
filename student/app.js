@@ -59,7 +59,8 @@ function sendStudentDataToFlask(studentData,DistanceCheck,BiometricCheck) {
 
         // Sending data to Flask server
         //'https://flask-servers-gqazghgmg7hnbsgv.centralindia-01.azurewebsites.net/attendance_data'
-        //'http://127.0.0.1:3001/attendance_data'
+        //'http://127.0.0.1:8080/round_robin'
+        //'https://round-robin-d0b9f9dhbzcdbrgn.centralindia-01.azurewebsites.net/round_robin'
         fetch('https://round-robin-d0b9f9dhbzcdbrgn.centralindia-01.azurewebsites.net/round_robin', {
             method: 'POST',
             headers: {
@@ -72,8 +73,14 @@ function sendStudentDataToFlask(studentData,DistanceCheck,BiometricCheck) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
-            alert('Attendance Marked Succesfully');
+            if (data.message=="Error processing request")
+            {
+                alert('Attendance Failed');
+            }
+            else{
+                console.log('Success:', data);
+                alert('Attendance Marked Succesfully');
+            }
         })
         .catch((error) => {
             console.error('Error:', error);
