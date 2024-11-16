@@ -227,6 +227,7 @@ wss.on('connection', (ws,req) => {
         }
     });
 
+    
     // Handle WebSocket errors
     ws.on('error', (error) => {
         console.error('WebSocket error:', error);
