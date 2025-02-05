@@ -11,7 +11,7 @@ const students = new Map();                                                     
 const teachers = new Map(); 
 let connections=0;
 // ---------------------------------Redis connection setup---------------------------
-const redisHost = '4.188.72.105'; // Use your Azure Redis host IP or hostname
+const redisHost = '20.244.36.74'; // Use your Azure Redis host IP or hostname
 const redisPort = 6379;           // Default port for Redis
 
 // Create a Redis subscriber client
