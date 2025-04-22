@@ -8,7 +8,7 @@ const servers = [
 ];
 
 //-----------------------------------------Redis Functionality------------------------------------
-const redisHost = '20.244.36.74'; 
+const redisHost = '135.235.216.189'; 
 const redisPort = 6379; 
 const channel='classconnect-channel'
 
